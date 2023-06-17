@@ -42,8 +42,10 @@ class MyEncoder(json.JSONEncoder):
 
 if __name__ == '__main__':
     data = MetaData()
-    for name in glob.glob('./emojis/*.png'):
-        data.addEmoji(os.path.basename(name))
+    types = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'tiff', 'tif', 'bmp', 'ico', 'svg', 'eps', 'raw']
+    for t in types:
+        for name in glob.glob('./emojis/*.' + t):
+            data.addEmoji(os.path.basename(name))
     with open('./emojis/meta.json', 'w') as f:
         json.dump(data, f, cls=MyEncoder)
     compFile = zipfile.ZipFile('./emojis.zip', 'w', zipfile.ZIP_DEFLATED)
